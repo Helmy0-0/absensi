@@ -1,0 +1,55 @@
+<?php
+
+return [
+    'accepted' => ':attribute harus diterima.',
+    'alpha_dash' => ':attribute hanya boleh berisi huruf, angka, strip, dan garis bawah.',
+    'array' => ':attribute harus berupa array.',
+    'before_or_equal' => ':attribute tidak boleh melewati :date.',
+    'after' => ':attribute harus setelah :date.',
+    'boolean' => ':attribute harus bernilai benar atau salah.',
+    'confirmed' => 'Konfirmasi :attribute tidak cocok.',
+    'current_password' => 'Password lama salah.',
+    'date' => ':attribute bukan tanggal yang valid.',
+    'date_format' => 'Format :attribute tidak sesuai (:format).',
+    'email' => ':attribute harus berupa alamat email yang valid.',
+    'exists' => ':attribute yang dipilih tidak valid.',
+    'file' => ':attribute harus berupa berkas.',
+    'in' => ':attribute yang dipilih tidak valid.',
+    'max' => [
+        'numeric' => ':attribute maksimal :max.',
+        'file' => 'Ukuran :attribute maksimal :max KB.',
+        'string' => ':attribute maksimal :max karakter.',
+        'array' => ':attribute maksimal :max item.',
+    ],
+    'mimes' => ':attribute harus berformat: :values.',
+    'min' => [
+        'numeric' => ':attribute minimal :min.',
+        'file' => 'Ukuran :attribute minimal :min KB.',
+        'string' => ':attribute minimal :min karakter.',
+        'array' => ':attribute minimal :min item.',
+    ],
+    'required' => ':attribute wajib diisi.',
+    'required_if' => ':attribute wajib diisi.',
+    'string' => ':attribute harus berupa teks.',
+    'unique' => ':attribute sudah dipakai.',
+    'uploaded' => ':attribute gagal diunggah.',
+
+    'password' => [
+        'letters' => ':attribute harus mengandung huruf.',
+        'mixed' => ':attribute harus mengandung huruf besar dan kecil.',
+        'numbers' => ':attribute harus mengandung angka.',
+        'symbols' => ':attribute harus mengandung simbol.',
+        'uncompromised' => ':attribute pernah bocor di internet. Pilih yang lain.',
+    ],
+
+    'attributes' => [
+        'nama' => 'Nama', 'username' => 'Username', 'email' => 'Email', 'no_hp' => 'No. HP',
+        'password' => 'Password', 'role' => 'Role', 'nuptk' => 'NUPTK', 'status_guru' => 'Status guru',
+        'nis' => 'NIS', 'jenis_kelamin' => 'Jenis kelamin', 'kelas_id' => 'Kelas', 'status' => 'Status',
+        'tingkat' => 'Tingkat', 'ruangan' => 'Ruangan', 'tahun_ajaran_id' => 'Tahun ajaran',
+        'tanggal' => 'Tanggal', 'tanggal_mulai' => 'Tanggal mulai', 'tanggal_selesai' => 'Tanggal selesai',
+        'guru_id' => 'Guru', 'peran' => 'Peran', 'mata_pelajaran' => 'Mata pelajaran',
+        'alasan' => 'Alasan', 'bukti' => 'Bukti', 'catatan_koreksi' => 'Catatan koreksi',
+        'login' => 'Username/email',
+    ],
+];
