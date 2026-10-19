@@ -9,7 +9,7 @@ use Illuminate\Http\UploadedFile;
 
 class SiswaImportService
 {
-    public const HEADER = ['nis', 'nama', 'jenis_kelamin', 'nama_kelas'];
+    public const HEADER = ['nis', 'nama', 'nama_kelas'];
 
     /**
      * @return array{berhasil:int, dilewati:int, gagal:array<int, array{baris:int, alasan:string}>}
@@ -55,35 +55,33 @@ class SiswaImportService
 
             $nis = trim((string) ($baris[$kolom['nis']] ?? ''));
             $nama = trim((string) ($baris[$kolom['nama']] ?? ''));
-            $jk = strtoupper(trim((string) ($baris[$kolom['jenis_kelamin']] ?? '')));
             $namaKelas = mb_strtolower(trim((string) ($baris[$kolom['nama_kelas']] ?? '')));
 
             if ($nis === '' || $nama === '') {
                 $gagal[] = ['baris' => $nomor, 'alasan' => 'NIS dan nama wajib diisi.'];
+
                 continue;
             }
             if (mb_strlen($nis) > 30 || mb_strlen($nama) > 150) {
                 $gagal[] = ['baris' => $nomor, 'alasan' => 'NIS atau nama terlalu panjang.'];
+
                 continue;
             }
             if (isset($nisAda[$nis])) {
                 $dilewati++;
-                continue;
-            }
-            if (! in_array($jk, ['L', 'P'], true)) {
-                $gagal[] = ['baris' => $nomor, 'alasan' => 'jenis_kelamin harus L atau P.'];
+
                 continue;
             }
             $kelas = $kelasMap->get($namaKelas);
             if (! $kelas) {
                 $gagal[] = ['baris' => $nomor, 'alasan' => 'Kelas "'.trim((string) $baris[$kolom['nama_kelas']]).'" tidak ditemukan pada tahun ajaran aktif.'];
+
                 continue;
             }
 
             Siswa::create([
                 'nis' => $nis,
                 'nama' => $nama,
-                'jenis_kelamin' => $jk,
                 'kelas_id' => $kelas->id,
                 'status' => 'aktif',
             ]);

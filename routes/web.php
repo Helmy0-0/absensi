@@ -10,6 +10,7 @@ use App\Http\Controllers\Master\KelasController;
 use App\Http\Controllers\Master\RelasiController;
 use App\Http\Controllers\Master\SiswaController;
 use App\Http\Controllers\Master\TahunAjaranController;
+use App\Http\Controllers\MonitoringIndividuController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RekapController;
 use App\Http\Controllers\Validasi\ValidasiGuruController;
@@ -90,6 +91,8 @@ Route::middleware('auth')->group(function () {
         Route::get('rekap', [RekapController::class, 'index'])->name('rekap');
         Route::get('rekap/pdf', [RekapController::class, 'pdf'])->name('rekap.pdf');
         Route::get('rekap/csv', [RekapController::class, 'csv'])->name('rekap.csv');
+        Route::get('rekap/individu', [MonitoringIndividuController::class, 'index'])->name('monitoring-individu');
+        Route::get('rekap/individu/pdf', [MonitoringIndividuController::class, 'pdf'])->name('monitoring-individu.pdf');
     });
 
     // Guru saja
@@ -107,5 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::get('rekap', [RekapController::class, 'index'])->name('rekap');
         Route::get('rekap/pdf', [RekapController::class, 'pdf'])->name('rekap.pdf');
         Route::get('rekap/csv', [RekapController::class, 'csv'])->name('rekap.csv');
+        Route::get('rekap/individu', [MonitoringIndividuController::class, 'index'])->name('monitoring-individu');
+        Route::get('rekap/individu/pdf', [MonitoringIndividuController::class, 'pdf'])->name('monitoring-individu.pdf');
     });
 });

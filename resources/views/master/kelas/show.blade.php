@@ -11,16 +11,16 @@
     </div>
     <div class="tw">
     <table class="tbl">
-        <thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>JK</th><th>Status</th></tr></thead>
+        <thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>Status</th></tr></thead>
         <tbody>
         @forelse ($siswa as $s)
             <tr>
                 <td data-label="No">{{ $loop->iteration }}</td><td data-label="NIS">{{ $s->nis }}</td>
-                <td data-label="Nama">{{ $s->nama }}</td><td data-label="JK">{{ $s->jenis_kelamin }}</td>
+                <td data-label="Nama">{{ $s->nama }}</td>
                 <td data-label="Status"><x-badge :status="$s->status" /></td>
             </tr>
         @empty
-            <tr><td colspan="5" class="empty">Belum ada siswa.</td></tr>
+            <tr><td colspan="4" class="empty">Belum ada siswa.</td></tr>
         @endforelse
         </tbody>
     </table>

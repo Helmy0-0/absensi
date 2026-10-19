@@ -14,39 +14,54 @@ use Illuminate\Http\Request;
 
 class ValidasiSiswaController extends Controller
 {
-    public function __construct(private AbsensiKelasService $service)
-    {
-    }
+    public function __construct(private AbsensiKelasService $service) {}
 
     public function index(Request $request)
     {
         $tanggal = Kalender::parse($request->query('tanggal'));
         $libur = Kalender::libur($tanggal);
+        $cari = trim((string) $request->query('q', ''));
+        $filter = in_array($request->query('filter'), ['pending', 'belum_laporan'], true)
+            ? $request->query('filter')
+            : 'semua';
 
         $semuaKelas = Kelas::tahunAktif()->whereHas('siswaAktif')
             ->orderBy('tingkat')->orderBy('nama')->get();
-
-        $kelasList = $request->filled('kelas_id')
-            ? $semuaKelas->where('id', (int) $request->kelas_id)
-            : $semuaKelas;
 
         $rows = collect();
         if (! $libur) {
             $laporan = AbsensiKelas::with('pelapor')
                 ->where('tanggal', $tanggal->toDateString())
-                ->whereIn('kelas_id', $kelasList->pluck('id'))
+                ->whereIn('kelas_id', $semuaKelas->pluck('id'))
                 ->get()
                 ->keyBy('kelas_id');
 
-            $rows = $kelasList->map(fn ($k) => ['kelas' => $k, 'laporan' => $laporan->get($k->id)])->values();
+            $rows = $semuaKelas->map(fn ($k) => ['kelas' => $k, 'laporan' => $laporan->get($k->id)])->values();
         }
+
+        $jumlahMenunggu = $rows->filter(fn ($r) => $r['laporan']?->status_validasi === 'pending')->count();
+        $jumlahBelumLaporan = $rows->filter(fn ($r) => ! $r['laporan'] || $r['laporan']->status_validasi === 'tidak_diabsen')->count();
+
+        $rows = $rows->filter(function ($r) use ($cari, $filter) {
+            $namaCocok = $cari === '' || str_contains(mb_strtolower($r['kelas']->nama), mb_strtolower($cari));
+            $statusCocok = match ($filter) {
+                'pending' => $r['laporan']?->status_validasi === 'pending',
+                'belum_laporan' => ! $r['laporan'] || $r['laporan']->status_validasi === 'tidak_diabsen',
+                default => true,
+            };
+
+            return $namaCocok && $statusCocok;
+        })->values();
 
         return view('validasi.siswa.index', [
             'tanggal' => $tanggal,
             'libur' => $libur,
             'rows' => $rows,
-            'semuaKelas' => $semuaKelas,
-            'adaPending' => $rows->contains(fn ($r) => $r['laporan']?->status_validasi === 'pending'),
+            'adaPending' => $jumlahMenunggu > 0,
+            'jumlahMenunggu' => $jumlahMenunggu,
+            'jumlahBelumLaporan' => $jumlahBelumLaporan,
+            'cari' => $cari,
+            'filter' => $filter,
         ]);
     }
 

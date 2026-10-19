@@ -19,7 +19,6 @@ class SiswaRequest extends FormRequest
         return [
             'nis' => ['required', 'string', 'max:30', Rule::unique('siswa', 'nis')->ignore($siswa?->id)],
             'nama' => ['required', 'string', 'max:150'],
-            'jenis_kelamin' => ['required', Rule::in(['L', 'P'])],
             'kelas_id' => ['nullable', 'exists:kelas,id'],
             'status' => ['required', Rule::in(['aktif', 'lulus', 'pindah', 'nonaktif'])],
         ];

@@ -45,7 +45,7 @@ return [
     'attributes' => [
         'nama' => 'Nama', 'username' => 'Username', 'email' => 'Email', 'no_hp' => 'No. HP',
         'password' => 'Password', 'role' => 'Role', 'nuptk' => 'NUPTK', 'status_guru' => 'Status guru',
-        'nis' => 'NIS', 'jenis_kelamin' => 'Jenis kelamin', 'kelas_id' => 'Kelas', 'status' => 'Status',
+        'nis' => 'NIS', 'kelas_id' => 'Kelas', 'status' => 'Status',
         'tingkat' => 'Tingkat', 'ruangan' => 'Ruangan', 'tahun_ajaran_id' => 'Tahun ajaran',
         'tanggal' => 'Tanggal', 'tanggal_mulai' => 'Tanggal mulai', 'tanggal_selesai' => 'Tanggal selesai',
         'guru_id' => 'Guru', 'peran' => 'Peran', 'mata_pelajaran' => 'Mata pelajaran',

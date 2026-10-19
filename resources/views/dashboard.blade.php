@@ -50,6 +50,8 @@
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
 <script>
+    Chart.defaults.font.family = "Poppins, system-ui, -apple-system, 'Segoe UI', sans-serif";
+    Chart.defaults.font.size = 14;
     const g = @json($grafik);
     const dataset = (label, data, warna) => ({
         label, data, borderColor: warna, backgroundColor: warna + '33',

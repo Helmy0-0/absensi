@@ -29,7 +29,7 @@
         <form method="POST" action="{{ route('master.siswa.import') }}" enctype="multipart/form-data">
             @csrf
             <p class="sm" style="margin-top:0">
-                Header wajib: <code>nis,nama,jenis_kelamin,nama_kelas</code>. <code>jenis_kelamin</code> berisi L/P.
+                Header wajib: <code>nis,nama,nama_kelas</code>.
                 <code>nama_kelas</code> harus cocok dengan kelas pada tahun ajaran aktif. NIS yang sudah ada dilewati.
                 Maks. 2 MB, UTF-8. <a href="{{ route('master.siswa.template') }}">Unduh template CSV</a>
             </p>
@@ -40,10 +40,17 @@
     <form method="GET" class="filters">
         <div><label>Cari nama / NIS</label><input type="search" name="q" value="{{ request('q') }}"></div>
         <div>
-            <label>Kelas</label>
+            <label>Kelas / Tingkat</label>
             <select name="kelas_id">
                 <option value="">Semua kelas</option>
-                @foreach ($kelasList as $k)<option value="{{ $k->id }}" @selected(request('kelas_id') == $k->id)>{{ $k->nama }}</option>@endforeach
+                <optgroup label="Semua kelas per tingkat">
+                    @foreach ([10 => 'X', 11 => 'XI', 12 => 'XII'] as $tingkat => $label)
+                        <option value="tingkat:{{ $tingkat }}" @selected(request('kelas_id') === 'tingkat:'.$tingkat)>Semua kelas {{ $label }}</option>
+                    @endforeach
+                </optgroup>
+                <optgroup label="Kelas tertentu">
+                    @foreach ($kelasList as $k)<option value="{{ $k->id }}" @selected(request('kelas_id') == $k->id)>{{ $k->nama }}</option>@endforeach
+                </optgroup>
             </select>
         </div>
         <div class="fix"><button class="btn">Filter</button> <a class="btn sec" href="{{ route('master.siswa.index') }}">Reset</a></div>
@@ -51,14 +58,13 @@
 
     <div class="tw">
     <table class="tbl">
-        <thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>JK</th><th>Kelas</th><th>Status</th><th></th></tr></thead>
+        <thead><tr><th>No</th><th>NIS</th><th>Nama</th><th>Kelas</th><th>Status</th><th></th></tr></thead>
         <tbody>
         @forelse ($siswa as $s)
             <tr>
                 <td data-label="No">{{ $siswa->firstItem() + $loop->index }}</td>
                 <td data-label="NIS">{{ $s->nis }}</td>
                 <td data-label="Nama">{{ $s->nama }}</td>
-                <td data-label="JK">{{ $s->jenis_kelamin }}</td>
                 <td data-label="Kelas">{{ $s->kelas?->nama ?? '-' }}</td>
                 <td data-label="Status"><x-badge :status="$s->status" /></td>
                 <td class="act">
@@ -69,7 +75,7 @@
                 </td>
             </tr>
         @empty
-            <tr><td colspan="7" class="empty">Tidak ada data.</td></tr>
+            <tr><td colspan="6" class="empty">Tidak ada data.</td></tr>
         @endforelse
         </tbody>
     </table>

@@ -5,23 +5,26 @@
 <div class="card">
     <h2>Laporan Kelas — {{ \App\Support\Kalender::tanggalPanjang($tanggal) }}</h2>
 
-    <form method="GET" class="filters">
+    <form method="GET" class="filters validation-filters">
         <div class="fix"><label>Tanggal</label><input type="date" name="tanggal" value="{{ $tanggal->toDateString() }}"></div>
-        <div>
-            <label>Kelas</label>
-            <select name="kelas_id">
-                <option value="">Semua kelas</option>
-                @foreach ($semuaKelas as $k)<option value="{{ $k->id }}" @selected(request('kelas_id') == $k->id)>{{ $k->nama }}</option>@endforeach
-            </select>
-        </div>
-        <div class="fix"><button class="btn">Tampilkan</button> <a class="btn sec" href="{{ route('validasi.siswa') }}">Hari ini</a></div>
+        <div><label>Cari kelas</label><input type="search" name="q" value="{{ $cari }}" placeholder="Ketik nama kelas..."></div>
+        <div><label>Tampilkan</label><select name="filter">
+            <option value="semua" @selected($filter === 'semua')>Semua status</option>
+            <option value="pending" @selected($filter === 'pending')>Menunggu validasi</option>
+            <option value="belum_laporan" @selected($filter === 'belum_laporan')>Belum ada laporan</option>
+        </select></div>
+        <div class="fix"><button class="btn">Cari</button> <a class="btn sec" href="{{ route('validasi.siswa') }}">Reset</a></div>
     </form>
 
     @if ($libur)
         <div class="alert alert-warn">Tanggal ini hari libur (Sabtu/Minggu). Tidak ada laporan yang dibuat atau dihitung.</div>
     @else
+        <div class="validation-summary">
+            <a href="{{ route('validasi.siswa', ['tanggal' => $tanggal->toDateString(), 'filter' => 'pending']) }}" class="validation-count pending"><span>Menunggu validasi</span><strong>{{ $jumlahMenunggu }}</strong></a>
+            <a href="{{ route('validasi.siswa', ['tanggal' => $tanggal->toDateString(), 'filter' => 'belum_laporan']) }}" class="validation-count missing"><span>Belum ada laporan</span><strong>{{ $jumlahBelumLaporan }}</strong></a>
+            <div class="validation-note">Sistem tidak otomatis mengalpakan siswa. Kelas tanpa laporan harus diisi lewat <strong>Input Manual</strong>.</div>
+        </div>
         <div class="flex between mb">
-            <span class="mut sm">Sistem tidak otomatis mengalpakan siswa. Kelas tanpa laporan harus diisi lewat <strong>Input Manual</strong>.</span>
             <form method="POST" action="{{ route('validasi.siswa.setujui-semua') }}" onsubmit="return confirm('Validasi semua laporan kelas yang masih menunggu pada tanggal ini?')">
                 @csrf <input type="hidden" name="tanggal" value="{{ $tanggal->toDateString() }}">
                 <button class="btn ok" @disabled(! $adaPending)>Validasi semua kelas</button>
