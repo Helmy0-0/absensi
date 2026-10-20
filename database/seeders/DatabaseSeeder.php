@@ -63,7 +63,6 @@ class DatabaseSeeder extends Seeder
                 Siswa::create([
                     'nis' => sprintf('%d%04d', $mulai, $nis++),
                     'nama' => $depan[array_rand($depan)].' '.$belakang[array_rand($belakang)],
-                    'jenis_kelamin' => mt_rand(0, 1) ? 'L' : 'P',
                     'kelas_id' => $kelas->id,
                     'status' => 'aktif',
                 ]);
@@ -134,6 +133,7 @@ class DatabaseSeeder extends Seeder
                 // Contoh kelas tidak diabsen
                 if ($ki === 3 && $d === 4) {
                     AbsensiKelas::create(['kelas_id' => $kelas->id, 'tanggal' => $tgl->toDateString(), 'status_validasi' => 'tidak_diabsen']);
+
                     continue;
                 }
 

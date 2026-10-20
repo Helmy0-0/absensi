@@ -5,16 +5,26 @@
 <div class="card">
     <h2>Absen Guru — {{ \App\Support\Kalender::tanggalPanjang($tanggal) }}</h2>
 
-    <form method="GET" class="filters">
+    <form method="GET" class="filters validation-filters">
         <div class="fix"><label>Tanggal</label><input type="date" name="tanggal" value="{{ $tanggal->toDateString() }}"></div>
-        <div class="fix"><button class="btn">Tampilkan</button> <a class="btn sec" href="{{ route('validasi.guru') }}">Hari ini</a></div>
+        <div><label>Cari guru</label><input type="search" name="q" value="{{ $cari }}" placeholder="Ketik nama guru..."></div>
+        <div><label>Tampilkan</label><select name="filter">
+            <option value="semua" @selected($filter === 'semua')>Semua status</option>
+            <option value="pending" @selected($filter === 'pending')>Menunggu validasi</option>
+            <option value="belum_absen" @selected($filter === 'belum_absen')>Belum absen</option>
+        </select></div>
+        <div class="fix"><button class="btn">Cari</button> <a class="btn sec" href="{{ route('validasi.guru') }}">Reset</a></div>
     </form>
 
     @if ($libur)
         <div class="alert alert-warn">Tanggal ini hari libur (Sabtu/Minggu). Tidak ada absensi yang dibuat atau dihitung.</div>
     @else
+        <div class="validation-summary">
+            <a href="{{ route('validasi.guru', ['tanggal' => $tanggal->toDateString(), 'filter' => 'pending']) }}" class="validation-count pending"><span>Menunggu validasi</span><strong>{{ $jumlahMenunggu }}</strong></a>
+            <a href="{{ route('validasi.guru', ['tanggal' => $tanggal->toDateString(), 'filter' => 'belum_absen']) }}" class="validation-count missing"><span>Belum absen</span><strong>{{ $jumlahBelumAbsen }}</strong></a>
+            <div class="validation-note">Guru yang belum check-in menjadi <strong>alpa otomatis</strong> pada pukul {{ config('absensi.jam_alpa_otomatis') }}.</div>
+        </div>
         <div class="flex between mb">
-            <span class="mut sm">Guru yang belum check-in menjadi <strong>alpa otomatis</strong> pada pukul {{ config('absensi.jam_alpa_otomatis') }}.</span>
             <form method="POST" action="{{ route('validasi.guru.setujui-semua') }}" onsubmit="return confirm('Setujui semua absen guru yang masih menunggu pada tanggal ini?')">
                 @csrf <input type="hidden" name="tanggal" value="{{ $tanggal->toDateString() }}">
                 <button class="btn ok" @disabled(! $adaPending)>Setujui semua pending</button>

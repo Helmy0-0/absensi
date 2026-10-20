@@ -1,8 +1,21 @@
+# Environment files and local secrets
+/.env
+/.env.*
+!/.env.example
+/auth.json
+
+# Local databases and backups
+/database/*.sqlite
+/database/*.sqlite-*
+*.sql
+*.sql.gz
+
+# Logs
 *.log
+
+# OS and editor files
 .DS_Store
-.env
-.env.backup
-.env.production
+Thumbs.db
 .phpactor.json
 .phpunit.result.cache
 /.codex
@@ -12,16 +25,26 @@
 /.phpunit.cache
 /.vscode
 /.zed
-/auth.json
+/.fleet
+/.history
+
+# Local AI tooling configuration and downloaded skills
+/.agents/
+/.claude/
+/.mcp.json
+/boost.json
+
+# Node, frontend build output, and runtime links
 /node_modules
 /public/build
 /public/fonts-manifest.dev.json
 /public/hot
 /public/storage
+
+# Laravel runtime files
 /storage/*.key
 /storage/pail
 /vendor
 _ide_helper.php
 Homestead.json
 Homestead.yaml
-Thumbs.db

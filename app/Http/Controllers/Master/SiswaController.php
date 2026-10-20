@@ -14,19 +14,31 @@ class SiswaController extends Controller
 {
     public function index(Request $request)
     {
+        $kelasList = $this->kelasAktif();
+        $kelasFilter = (string) $request->query('kelas_id', '');
+        $tingkatFilter = match ($kelasFilter) {
+            'tingkat:10' => 10,
+            'tingkat:11' => 11,
+            'tingkat:12' => 12,
+            default => null,
+        };
+
         $siswa = Siswa::with('kelas')
             ->when($request->filled('q'), function ($q) use ($request) {
                 $kata = '%'.$request->q.'%';
                 $q->where(fn ($w) => $w->where('nama', 'like', $kata)->orWhere('nis', 'like', $kata));
             })
-            ->when($request->filled('kelas_id'), fn ($q) => $q->where('kelas_id', $request->kelas_id))
+            ->when($tingkatFilter, fn ($q) => $q->whereHas('kelas', fn ($kelas) => $kelas
+                ->where('tingkat', $tingkatFilter)
+                ->whereIn('kelas.id', $kelasList->pluck('id'))))
+            ->when(ctype_digit($kelasFilter), fn ($q) => $q->where('kelas_id', (int) $kelasFilter))
             ->orderBy('nama')
             ->paginate(15)
             ->withQueryString();
 
         return view('master.siswa.index', [
             'siswa' => $siswa,
-            'kelasList' => $this->kelasAktif(),
+            'kelasList' => $kelasList,
         ]);
     }
 
@@ -75,7 +87,7 @@ class SiswaController extends Controller
             $out = fopen('php://output', 'w');
             fwrite($out, "\xEF\xBB\xBF");
             fputcsv($out, SiswaImportService::HEADER);
-            fputcsv($out, ['2026001', 'Contoh Nama Siswa', 'L', 'X-1']);
+            fputcsv($out, ['2026001', 'Contoh Nama Siswa', 'X-1']);
             fclose($out);
         }, 'template-import-siswa.csv', ['Content-Type' => 'text/csv; charset=UTF-8']);
     }

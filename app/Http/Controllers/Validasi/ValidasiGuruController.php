@@ -13,14 +13,16 @@ use Illuminate\Http\Request;
 
 class ValidasiGuruController extends Controller
 {
-    public function __construct(private AbsensiGuruService $service)
-    {
-    }
+    public function __construct(private AbsensiGuruService $service) {}
 
     public function index(Request $request)
     {
         $tanggal = Kalender::parse($request->query('tanggal'));
         $libur = Kalender::libur($tanggal);
+        $cari = trim((string) $request->query('q', ''));
+        $filter = in_array($request->query('filter'), ['pending', 'belum_absen'], true)
+            ? $request->query('filter')
+            : 'semua';
 
         $rows = collect();
         if (! $libur) {
@@ -37,11 +39,29 @@ class ValidasiGuruController extends Controller
                 ->map(fn ($g) => ['guru' => $g, 'absen' => $absen->get($g->id)]);
         }
 
+        $jumlahMenunggu = $rows->filter(fn ($r) => $r['absen']?->status_validasi === 'pending')->count();
+        $jumlahBelumAbsen = $rows->filter(fn ($r) => $r['absen'] === null)->count();
+
+        $rows = $rows->filter(function ($r) use ($cari, $filter) {
+            $namaCocok = $cari === '' || str_contains(mb_strtolower($r['guru']->user?->nama ?? ''), mb_strtolower($cari));
+            $statusCocok = match ($filter) {
+                'pending' => $r['absen']?->status_validasi === 'pending',
+                'belum_absen' => $r['absen'] === null,
+                default => true,
+            };
+
+            return $namaCocok && $statusCocok;
+        })->values();
+
         return view('validasi.guru.index', [
             'tanggal' => $tanggal,
             'libur' => $libur,
             'rows' => $rows,
-            'adaPending' => $rows->contains(fn ($r) => $r['absen']?->status_validasi === 'pending'),
+            'adaPending' => $jumlahMenunggu > 0,
+            'jumlahMenunggu' => $jumlahMenunggu,
+            'jumlahBelumAbsen' => $jumlahBelumAbsen,
+            'cari' => $cari,
+            'filter' => $filter,
         ]);
     }
 
