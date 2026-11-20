@@ -10,19 +10,19 @@
                 ['Kelola Kelas', route('master.kelas.index'), 'master.kelas.*|master.tahun-ajaran.*', 'school'],
                 ['Relasi Guru–Kelas', route('master.relasi.index'), 'master.relasi.*', 'link'],
             ],
-            'Absensi & laporan' => [
+            'Presensi & laporan' => [
                 ['Validasi Absen Guru', route('validasi.guru'), 'validasi.guru*', 'check'],
                 ['Validasi Absen Siswa', route('validasi.siswa'), 'validasi.siswa*', 'check'],
-                ['Rekap Absensi', route('rekap'), 'rekap*', 'chart'],
+                ['Rekap Presensi', route('rekap'), 'rekap*', 'chart'],
                 ['Monitoring Individu', route('monitoring-individu'), 'monitoring-individu*', 'chart'],
             ],
         ],
         'kesiswaan' => [
             'Ringkasan' => [['Dashboard', route('kesiswaan.dashboard'), 'kesiswaan.dashboard', 'home']],
-            'Absensi & laporan' => [
+            'Presensi & laporan' => [
                 ['Validasi Absen Guru', route('validasi.guru'), 'validasi.guru*', 'check'],
                 ['Validasi Absen Siswa', route('validasi.siswa'), 'validasi.siswa*', 'check'],
-                ['Rekap Absensi', route('rekap'), 'rekap*', 'chart'],
+                ['Rekap Presensi', route('rekap'), 'rekap*', 'chart'],
                 ['Monitoring Individu', route('monitoring-individu'), 'monitoring-individu*', 'chart'],
             ],
             'Data sekolah' => [
@@ -38,7 +38,7 @@
                 ['Absen Siswa', route('guru.absen-siswa'), 'guru.absen-siswa*', 'student'],
             ],
             'Laporan' => [
-                ['Rekap Absensi', route('guru.rekap'), 'guru.rekap*', 'chart'],
+                ['Rekap Presensi', route('guru.rekap'), 'guru.rekap*', 'chart'],
                 ['Monitoring Individu', route('guru.monitoring-individu'), 'guru.monitoring-individu*', 'chart'],
             ],
         ],

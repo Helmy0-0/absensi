@@ -2,7 +2,7 @@
 @section('judul', 'Masuk')
 @section('isi')
 <div class="login-box">
-    <h1>Absensi Terpadu</h1>
+    <h1>Presensi Terpadu</h1>
     <p class="tc mut" style="margin-top:0">{{ config('absensi.nama_sekolah') }}</p>
 
     @if ($errors->has('login'))

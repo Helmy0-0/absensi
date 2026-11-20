@@ -69,7 +69,7 @@
                 <td data-label="Status"><x-badge :status="$s->status" /></td>
                 <td class="act">
                     <a class="btn sm sec" href="{{ route('master.siswa.edit', $s) }}">Edit</a>
-                    <form method="POST" action="{{ route('master.siswa.destroy', $s) }}" onsubmit="return confirm('Hapus siswa {{ $s->nama }}? Riwayat absensi tetap tersimpan.')">
+                    <form method="POST" action="{{ route('master.siswa.destroy', $s) }}" onsubmit="return confirm('Hapus siswa {{ $s->nama }}? Riwayat presensi tetap tersimpan.')">
                         @csrf @method('DELETE') <button class="btn sm bad">Hapus</button>
                     </form>
                 </td>

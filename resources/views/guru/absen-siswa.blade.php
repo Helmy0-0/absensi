@@ -31,7 +31,7 @@
 
     @switch($mode)
         @case('libur')
-            <div class="alert alert-warn">Hari ini bukan hari efektif (Sabtu/Minggu). Form absensi dinonaktifkan.</div>
+            <div class="alert alert-warn">Hari ini bukan hari efektif (Sabtu/Minggu). Form presensi dinonaktifkan.</div>
             @break
 
         @case('readonly')
@@ -51,7 +51,7 @@
             @endif
 
             <form method="POST" action="{{ route('guru.absen-siswa.store') }}"
-                  onsubmit="return confirm('Kirim absensi kelas ini? Data akan terkunci dan masuk antrean validasi.')">
+                  onsubmit="return confirm('Kirim presensi kelas ini? Data akan terkunci dan masuk antrean validasi.')">
                 @csrf
                 <input type="hidden" name="kelas_id" value="{{ $kelas->id }}">
                 <input type="hidden" name="tanggal" value="{{ $tanggal->toDateString() }}">

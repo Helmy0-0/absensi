@@ -20,7 +20,7 @@
     $kelas = $tipe === 'siswa' ? $person->kelas?->nama : null;
 @endphp
 <div class="kop"><h1>{{ $sekolah }}</h1><p>{{ $alamat }}</p></div>
-<h2>Laporan Monitoring Absensi Individu</h2>
+<h2>Laporan Monitoring Presensi Individu</h2>
 <div class="meta">
     <strong>{{ $nama }}</strong><br>
     {{ $tipe === 'siswa' ? 'NIS' : 'NUPTK' }}: {{ $kode }}@if ($kelas) · Kelas {{ $kelas }}@endif<br>
@@ -29,7 +29,7 @@
 <table class="summary"><tr>
     <td>Persentase hadir<strong>{{ $statistik['hadir_percent'] !== null ? $statistik['hadir_percent'].'%' : '—' }}</strong></td>
     <td>Hari tercatat<strong>{{ $statistik['hari_tercatat'] }}</strong></td>
-    <td>Total absensi<strong>{{ $statistik['total'] }}</strong></td>
+    <td>Total presensi<strong>{{ $statistik['total'] }}</strong></td>
     <td>Hadir<strong>{{ $statistik['status']['hadir'] }}</strong></td>
 </tr></table>
 <h2>Riwayat Ketidakhadiran</h2>
@@ -43,7 +43,7 @@
     @endforelse
     </tbody>
 </table>
-<p class="note">Riwayat ini hanya menampilkan sakit, izin, dan alpa yang sudah tervalidasi. Hari tanpa catatan absensi tidak dianggap alpa. Sabtu/Minggu dikecualikan; libur khusus sekolah belum tercatat di kalender aplikasi.</p>
+<p class="note">Riwayat ini hanya menampilkan sakit, izin, dan alpa yang sudah tervalidasi. Hari tanpa catatan presensi tidak dianggap alpa. Sabtu/Minggu dikecualikan; libur khusus sekolah belum tercatat di kalender aplikasi.</p>
 <div class="foot">Dicetak: {{ $dicetak }}</div>
 </body>
 </html>

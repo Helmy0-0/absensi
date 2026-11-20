@@ -17,7 +17,7 @@
     </form>
 
     @if ($libur)
-        <div class="alert alert-warn">Tanggal ini hari libur (Sabtu/Minggu). Tidak ada absensi yang dibuat atau dihitung.</div>
+        <div class="alert alert-warn">Tanggal ini hari libur (Sabtu/Minggu). Tidak ada presensi yang dibuat atau dihitung.</div>
     @else
         <div class="validation-summary">
             <a href="{{ route('validasi.guru', ['tanggal' => $tanggal->toDateString(), 'filter' => 'pending']) }}" class="validation-count pending"><span>Menunggu validasi</span><strong>{{ $jumlahMenunggu }}</strong></a>

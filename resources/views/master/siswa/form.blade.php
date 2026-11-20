@@ -23,7 +23,7 @@
                     <option value="{{ $k->id }}" @selected(old('kelas_id', $siswa?->kelas_id) == $k->id)>{{ $k->nama }}</option>
                 @endforeach
             </select>
-            <div class="mut sm">Memindahkan kelas tidak mengubah riwayat absensi yang sudah ada.</div>
+            <div class="mut sm">Memindahkan kelas tidak mengubah riwayat presensi yang sudah ada.</div>
         </div>
         <button class="btn">Simpan</button>
         <a class="btn sec" href="{{ route('master.siswa.index') }}">Batal</a>

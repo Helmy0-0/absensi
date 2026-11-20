@@ -6,7 +6,6 @@ use App\Models\Kelas;
 use App\Services\RekapService;
 use App\Support\Kalender;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -15,9 +14,7 @@ use Illuminate\Http\Request;
  */
 class RekapController extends Controller
 {
-    public function __construct(private RekapService $service)
-    {
-    }
+    public function __construct(private RekapService $service) {}
 
     public function index(Request $request)
     {
@@ -111,7 +108,7 @@ class RekapController extends Controller
             'periode' => $dari->eq($sampaiBulan)
                 ? Kalender::bulanTahun($dari)
                 : Kalender::bulanTahun($dari).' s.d. '.Kalender::bulanTahun($sampaiBulan),
-            'judul' => $tipe === 'guru' ? 'Rekap Absensi Guru' : 'Rekap Absensi Siswa',
+            'judul' => $tipe === 'guru' ? 'Rekap Presensi Guru' : 'Rekap Presensi Siswa',
             'rows' => $rows->values(),
             'kelasList' => $kelasList,
         ];

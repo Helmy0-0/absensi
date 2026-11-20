@@ -66,7 +66,7 @@ class SiswaController extends Controller
         return redirect()->route('master.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
 
-    /** R-03/R-71: soft delete — riwayat absensi tetap utuh. */
+    /** R-03/R-71: soft delete — riwayat presensi tetap utuh. */
     public function destroy(Siswa $siswa)
     {
         $siswa->delete();

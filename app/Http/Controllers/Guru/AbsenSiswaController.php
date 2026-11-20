@@ -12,9 +12,7 @@ use Illuminate\Http\Request;
 
 class AbsenSiswaController extends Controller
 {
-    public function __construct(private AbsensiKelasService $service)
-    {
-    }
+    public function __construct(private AbsensiKelasService $service) {}
 
     public function index(Request $request)
     {
@@ -105,7 +103,7 @@ class AbsenSiswaController extends Controller
         $this->service->simpanOlehGuru($guru, $kelas, $tanggal, $d['siswa'] ?? []);
 
         return redirect()->route('guru.absen-siswa', ['kelas_id' => $kelas->id])
-            ->with('success', "Absensi kelas {$kelas->nama} dikirim dan menunggu validasi.");
+            ->with('success', "Presensi kelas {$kelas->nama} dikirim dan menunggu validasi.");
     }
 
     private function barisDariLaporan(AbsensiKelas $laporan)

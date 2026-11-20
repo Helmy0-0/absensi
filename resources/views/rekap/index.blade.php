@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('judul', 'Rekap Absensi')
+@section('judul', 'Rekap Presensi')
 @section('isi')
 <div class="card" x-data="{ tipe: '{{ $f['tipe'] }}' }">
     <h2>{{ $f['judul'] }}</h2>

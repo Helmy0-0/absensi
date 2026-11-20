@@ -2,8 +2,8 @@
 @section('judul', 'Monitoring Individu')
 @section('isi')
 <div class="card">
-    <h2>Monitoring Absensi Individu</h2>
-    <p class="mut sm" style="margin-top:0">Rekap resmi hanya memakai absensi yang tervalidasi. Hari tanpa catatan tidak dianggap alpa. Sabtu/Minggu dikecualikan; libur khusus sekolah belum tercatat di kalender aplikasi.</p>
+    <h2>Monitoring Presensi Individu</h2>
+    <p class="mut sm" style="margin-top:0">Rekap resmi hanya memakai presensi yang tervalidasi. Hari tanpa catatan tidak dianggap alpa. Sabtu/Minggu dikecualikan; libur khusus sekolah belum tercatat di kalender aplikasi.</p>
 
     <form method="GET" action="{{ route($rute['index']) }}" class="filters" x-data="{ periode: '{{ $periode }}' }">
         <div>
@@ -55,7 +55,7 @@
     </form>
 
     @if ($adalahGuru && $tipe === 'guru')
-        <p class="mut sm">Data guru yang ditampilkan adalah absensi akun Anda sendiri.</p>
+        <p class="mut sm">Data guru yang ditampilkan adalah presensi akun Anda sendiri.</p>
     @elseif (mb_strlen($search) < 2)
         <p class="mut sm">Ketik minimal 2 karakter pada nama atau NIS, lalu tekan Cari. Maksimal 100 hasil ditampilkan.</p>
     @elseif ($daftar->isEmpty())
@@ -86,7 +86,7 @@
 
     <div class="card">
         <div class="flex between mb">
-            <h2 style="margin:0">Total Absensi</h2>
+            <h2 style="margin:0">Total Presensi</h2>
             <span class="mut sm">{{ $statistik['total'] }} catatan tervalidasi</span>
         </div>
         <div class="grid g4 attendance-counts">
@@ -97,22 +97,22 @@
     </div>
 
     <div class="grid g2 mb">
-        <div class="stat"><div class="l">Persentase hadir</div><div class="v">{{ $statistik['hadir_percent'] !== null ? $statistik['hadir_percent'].'%' : '—' }}</div><div class="h">Dari absensi yang tercatat</div></div>
-        <div class="stat"><div class="l">Hari tercatat</div><div class="v">{{ $statistik['hari_tercatat'] }}</div><div class="h">Hari efektif dengan absensi tervalidasi</div></div>
+        <div class="stat"><div class="l">Persentase hadir</div><div class="v">{{ $statistik['hadir_percent'] !== null ? $statistik['hadir_percent'].'%' : '—' }}</div><div class="h">Dari presensi yang tercatat</div></div>
+        <div class="stat"><div class="l">Hari tercatat</div><div class="v">{{ $statistik['hari_tercatat'] }}</div><div class="h">Hari efektif dengan presensi tervalidasi</div></div>
     </div>
 
     @if ($statistik['total'] === 0)
-        <div class="alert alert-warn">Belum ada absensi tervalidasi pada rentang ringkasan ini. Hari tanpa catatan tidak dihitung sebagai alpa.</div>
+        <div class="alert alert-warn">Belum ada presensi tervalidasi pada rentang ringkasan ini. Hari tanpa catatan tidak dihitung sebagai alpa.</div>
     @endif
 
     <div class="grid g2 monitoring-charts">
         <div class="card">
-            <h2>Komposisi Absensi</h2>
+            <h2>Komposisi Presensi</h2>
             <div class="monitor-chart"><canvas id="komposisi"></canvas></div>
         </div>
         <div class="card">
             <h2>Tren Persentase Hadir</h2>
-            <p class="mut sm" style="margin-top:0">Menampilkan {{ ['minggu' => '8 minggu', 'bulan' => '12 bulan', 'semester' => '6 semester', 'tahun' => '5 tahun'][$skalaTren] }} hingga {{ $sampai->format('d/m/Y') }}. Hanya absensi tervalidasi; arahkan ke titik untuk melihat hadir dibanding jumlah catatan.</p>
+            <p class="mut sm" style="margin-top:0">Menampilkan {{ ['minggu' => '8 minggu', 'bulan' => '12 bulan', 'semester' => '6 semester', 'tahun' => '5 tahun'][$skalaTren] }} hingga {{ $sampai->format('d/m/Y') }}. Hanya presensi tervalidasi; arahkan ke titik untuk melihat hadir dibanding jumlah catatan.</p>
             <form method="GET" action="{{ route($rute['index']) }}" class="filters trend-filters">
                 <input type="hidden" name="tipe" value="{{ $tipe }}">
                 <input type="hidden" name="q" value="{{ $search }}">

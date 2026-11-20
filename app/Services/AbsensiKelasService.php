@@ -40,7 +40,7 @@ class AbsensiKelasService
         }
 
         if (! $tanggal->isSameDay(Kalender::hariIni())) {
-            throw new BisnisException('Absensi hanya dapat diinput untuk hari ini.');
+            throw new BisnisException('Presensi hanya dapat diinput untuk hari ini.');
         }
 
         return $this->kirim($guru, $kelas, $tanggal, $items);
