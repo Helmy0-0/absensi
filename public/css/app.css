@@ -78,6 +78,12 @@ textarea { min-height: 100px; resize: vertical; }
 input::placeholder, textarea::placeholder { color: #98a3b4; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(37,99,235,.12); }
 input:disabled, select:disabled { background: var(--gray-bg); color: var(--mut); }
+.password-input { position: relative; }
+.password-input input { padding-right: 3rem; }
+.password-visibility { position: absolute; top: 50%; right: .35rem; display: grid; width: 36px; height: 36px; place-items: center; padding: 0; border: 0; border-radius: 7px; background: transparent; color: var(--mut); cursor: pointer; transform: translateY(-50%); }
+.password-visibility:hover { background: #f3f6fb; color: var(--tx); }
+.password-visibility svg { width: 20px; height: 20px; }
+.password-visibility [hidden] { display: none; }
 .fg { margin-bottom: 1rem; } .err { color: var(--err); font-size: .78rem; margin-top: .2rem; }
 .filters { display: flex; gap: .7rem; flex-wrap: wrap; align-items: flex-end; margin-bottom: 1rem; }
 .filters > div { flex: 1; min-width: 150px; } .filters .fix { flex: 0 0 auto; min-width: 0; }

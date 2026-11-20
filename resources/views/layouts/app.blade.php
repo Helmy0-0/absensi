@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="{{ asset('js/password-visibility.js') }}"></script>
     @stack('head')
 </head>
 <body x-data="{ menu: false }" @keydown.escape.window="menu = false" :class="{ 'menu-open': menu }">
